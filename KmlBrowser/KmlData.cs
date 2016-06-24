@@ -16,11 +16,22 @@ namespace KmlBrowser
 
             kml myKml = new kml();
             FileStream fs = new FileStream(sourceFileName, FileMode.Open);
-
             myKml = (kml)reader.Deserialize(fs);
-
+            fs.Close();
+            
             return myKml;
         }
+
+
+        public static void write(String FileName, kml kmlData)
+        {
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(kml));
+            FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate);
+            writer.Serialize(fs,kmlData);
+            fs.Close();
+        }
+
+
     }
 
 
@@ -59,9 +70,9 @@ namespace KmlBrowser
         private object[] itemsField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Folder", typeof(kmlDocumentFolder))]
-        [System.Xml.Serialization.XmlElementAttribute("Style", typeof(kmlDocumentStyle))]
-        [System.Xml.Serialization.XmlElementAttribute("StyleMap", typeof(kmlDocumentStyleMap))]
+        [System.Xml.Serialization.XmlElementAttribute("Folder", typeof(kmlFolder))]
+        [System.Xml.Serialization.XmlElementAttribute("Style", typeof(kmlStyle))]
+        [System.Xml.Serialization.XmlElementAttribute("StyleMap", typeof(kmlMap))]
         [System.Xml.Serialization.XmlElementAttribute("name", typeof(string))]
         public object[] Items
         {
@@ -78,7 +89,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolder
+    public partial class kmlFolder
     {
 
         private string nameField;
@@ -87,9 +98,9 @@ namespace KmlBrowser
 
         private byte openField;
 
-        private kmlDocumentFolderFolder[] folderField;
+        private kmlFolder[] folderField;
 
-        private kmlDocumentFolderPlacemark[] placemarkField;
+        private kmlPlacemark[] placemarkField;
 
         /// <remarks/>
         public string name
@@ -132,7 +143,7 @@ namespace KmlBrowser
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Folder")]
-        public kmlDocumentFolderFolder[] Folder
+        public kmlFolder[] Folder
         {
             get
             {
@@ -146,7 +157,7 @@ namespace KmlBrowser
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Placemark")]
-        public kmlDocumentFolderPlacemark[] Placemark
+        public kmlPlacemark[] Placemark
         {
             get
             {
@@ -159,164 +170,163 @@ namespace KmlBrowser
         }
     }
 
+
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolder
+    public partial class kmlCamera
     {
 
-        private string nameField;
+        private decimal longitudeField;
 
-        private byte visibilityField;
+        private decimal latitudeField;
 
-        private kmlDocumentFolderFolderFolder folderField;
+        private decimal altitudeField;
 
-        private kmlDocumentFolderFolderPlacemark[] placemarkField;
+        private decimal headingField;
+
+        private decimal tiltField;
+
+        private decimal rollField;
+
+        private string altitudeModeField;
 
         /// <remarks/>
-        public string name
+        public decimal longitude
         {
             get
             {
-                return this.nameField;
+                return this.longitudeField;
             }
             set
             {
-                this.nameField = value;
+                this.longitudeField = value;
             }
         }
 
         /// <remarks/>
-        public byte visibility
+        public decimal latitude
         {
             get
             {
-                return this.visibilityField;
+                return this.latitudeField;
             }
             set
             {
-                this.visibilityField = value;
+                this.latitudeField = value;
             }
         }
 
         /// <remarks/>
-        public kmlDocumentFolderFolderFolder Folder
+        public decimal altitude
         {
             get
             {
-                return this.folderField;
+                return this.altitudeField;
             }
             set
             {
-                this.folderField = value;
+                this.altitudeField = value;
             }
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Placemark")]
-        public kmlDocumentFolderFolderPlacemark[] Placemark
+        public decimal heading
         {
             get
             {
-                return this.placemarkField;
+                return this.headingField;
             }
             set
             {
-                this.placemarkField = value;
+                this.headingField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal tilt
+        {
+            get
+            {
+                return this.tiltField;
+            }
+            set
+            {
+                this.tiltField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal roll
+        {
+            get
+            {
+                return this.rollField;
+            }
+            set
+            {
+                this.rollField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
+        public string altitudeMode
+        {
+            get
+            {
+                return this.altitudeModeField;
+            }
+            set
+            {
+                this.altitudeModeField = value;
             }
         }
     }
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolder
+    public partial class kmlLineString
     {
 
-        private string nameField;
-
-        private byte visibilityField;
-
-        private byte openField;
-
-        private kmlDocumentFolderFolderFolderPlacemark[] placemarkField;
+        private string coordinatesField;
 
         /// <remarks/>
-        public string name
+        public string coordinates
         {
             get
             {
-                return this.nameField;
+                return this.coordinatesField;
             }
             set
             {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte visibility
-        {
-            get
-            {
-                return this.visibilityField;
-            }
-            set
-            {
-                this.visibilityField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte open
-        {
-            get
-            {
-                return this.openField;
-            }
-            set
-            {
-                this.openField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Placemark")]
-        public kmlDocumentFolderFolderFolderPlacemark[] Placemark
-        {
-            get
-            {
-                return this.placemarkField;
-            }
-            set
-            {
-                this.placemarkField = value;
+                this.coordinatesField = value;
             }
         }
     }
 
+ 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolderPlacemark
+    public partial class kmlPlacemark
     {
 
         private string nameField;
 
         private byte visibilityField;
 
-        private kmlDocumentFolderFolderFolderPlacemarkLookAt lookAtField;
+        private kmlLookAt lookAtField;
 
-        private kmlDocumentFolderFolderFolderPlacemarkCamera cameraField;
+        private string styleUrlField;
+
+        private kmlPoint pointField;
+
+        private kmlCamera cameraField;
 
         private byte openField;
 
         private bool openFieldSpecified;
 
-        private string styleUrlField;
-
-        private kmlDocumentFolderFolderFolderPlacemarkPoint pointField;
-
-        private kmlDocumentFolderFolderFolderPlacemarkLineString lineStringField;
-
-        private string idField;
+        private kmlLineString lineStringField;
 
         /// <remarks/>
         public string name
@@ -345,7 +355,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentFolderFolderFolderPlacemarkLookAt LookAt
+        public kmlLookAt LookAt
         {
             get
             {
@@ -358,7 +368,32 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentFolderFolderFolderPlacemarkCamera Camera
+        public string styleUrl
+        {
+            get
+            {
+                return this.styleUrlField;
+            }
+            set
+            {
+                this.styleUrlField = value;
+            }
+        }
+
+        /// <remarks/>
+        public kmlPoint Point
+        {
+            get
+            {
+                return this.pointField;
+            }
+            set
+            {
+                this.pointField = value;
+            }
+        }
+
+        public kmlCamera Camera
         {
             get
             {
@@ -397,34 +432,7 @@ namespace KmlBrowser
             }
         }
 
-        /// <remarks/>
-        public string styleUrl
-        {
-            get
-            {
-                return this.styleUrlField;
-            }
-            set
-            {
-                this.styleUrlField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderFolderPlacemarkPoint Point
-        {
-            get
-            {
-                return this.pointField;
-            }
-            set
-            {
-                this.pointField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderFolderPlacemarkLineString LineString
+        public kmlLineString LineString
         {
             get
             {
@@ -436,24 +444,11 @@ namespace KmlBrowser
             }
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
     }
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolderPlacemarkLookAt
+    public partial class kmlLookAt
     {
 
         private decimal longitudeField;
@@ -565,119 +560,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolderPlacemarkCamera
-    {
-
-        private decimal longitudeField;
-
-        private decimal latitudeField;
-
-        private decimal altitudeField;
-
-        private decimal headingField;
-
-        private decimal tiltField;
-
-        private decimal rollField;
-
-        private string altitudeModeField;
-
-        /// <remarks/>
-        public decimal longitude
-        {
-            get
-            {
-                return this.longitudeField;
-            }
-            set
-            {
-                this.longitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal latitude
-        {
-            get
-            {
-                return this.latitudeField;
-            }
-            set
-            {
-                this.latitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal altitude
-        {
-            get
-            {
-                return this.altitudeField;
-            }
-            set
-            {
-                this.altitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal heading
-        {
-            get
-            {
-                return this.headingField;
-            }
-            set
-            {
-                this.headingField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal tilt
-        {
-            get
-            {
-                return this.tiltField;
-            }
-            set
-            {
-                this.tiltField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal roll
-        {
-            get
-            {
-                return this.rollField;
-            }
-            set
-            {
-                this.rollField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public string altitudeMode
-        {
-            get
-            {
-                return this.altitudeModeField;
-            }
-            set
-            {
-                this.altitudeModeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolderPlacemarkPoint
+    public partial class kmlPoint
     {
 
         private byte drawOrderField;
@@ -714,678 +597,19 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderFolderPlacemarkLineString
+    public partial class kmlStyle
     {
 
-        private string coordinatesField;
+        private kmlIconStyle iconStyleField;
 
-        /// <remarks/>
-        public string coordinates
-        {
-            get
-            {
-                return this.coordinatesField;
-            }
-            set
-            {
-                this.coordinatesField = value;
-            }
-        }
-    }
+        private kmlLabelStyle labelStyleField;
 
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderPlacemark
-    {
-
-        private string nameField;
-
-        private byte visibilityField;
-
-        private kmlDocumentFolderFolderPlacemarkCamera cameraField;
-
-        private kmlDocumentFolderFolderPlacemarkLookAt lookAtField;
-
-        private string styleUrlField;
-
-        private kmlDocumentFolderFolderPlacemarkLineString lineStringField;
-
-        private kmlDocumentFolderFolderPlacemarkPoint pointField;
-
-        /// <remarks/>
-        public string name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte visibility
-        {
-            get
-            {
-                return this.visibilityField;
-            }
-            set
-            {
-                this.visibilityField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderPlacemarkCamera Camera
-        {
-            get
-            {
-                return this.cameraField;
-            }
-            set
-            {
-                this.cameraField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderPlacemarkLookAt LookAt
-        {
-            get
-            {
-                return this.lookAtField;
-            }
-            set
-            {
-                this.lookAtField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string styleUrl
-        {
-            get
-            {
-                return this.styleUrlField;
-            }
-            set
-            {
-                this.styleUrlField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderPlacemarkLineString LineString
-        {
-            get
-            {
-                return this.lineStringField;
-            }
-            set
-            {
-                this.lineStringField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderFolderPlacemarkPoint Point
-        {
-            get
-            {
-                return this.pointField;
-            }
-            set
-            {
-                this.pointField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderPlacemarkCamera
-    {
-
-        private decimal longitudeField;
-
-        private decimal latitudeField;
-
-        private decimal altitudeField;
-
-        private decimal headingField;
-
-        private decimal tiltField;
-
-        private decimal rollField;
-
-        private string altitudeModeField;
-
-        /// <remarks/>
-        public decimal longitude
-        {
-            get
-            {
-                return this.longitudeField;
-            }
-            set
-            {
-                this.longitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal latitude
-        {
-            get
-            {
-                return this.latitudeField;
-            }
-            set
-            {
-                this.latitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal altitude
-        {
-            get
-            {
-                return this.altitudeField;
-            }
-            set
-            {
-                this.altitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal heading
-        {
-            get
-            {
-                return this.headingField;
-            }
-            set
-            {
-                this.headingField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal tilt
-        {
-            get
-            {
-                return this.tiltField;
-            }
-            set
-            {
-                this.tiltField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal roll
-        {
-            get
-            {
-                return this.rollField;
-            }
-            set
-            {
-                this.rollField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public string altitudeMode
-        {
-            get
-            {
-                return this.altitudeModeField;
-            }
-            set
-            {
-                this.altitudeModeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderPlacemarkLookAt
-    {
-
-        private decimal longitudeField;
-
-        private decimal latitudeField;
-
-        private byte altitudeField;
-
-        private decimal headingField;
-
-        private decimal tiltField;
-
-        private decimal rangeField;
-
-        private string altitudeModeField;
-
-        /// <remarks/>
-        public decimal longitude
-        {
-            get
-            {
-                return this.longitudeField;
-            }
-            set
-            {
-                this.longitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal latitude
-        {
-            get
-            {
-                return this.latitudeField;
-            }
-            set
-            {
-                this.latitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte altitude
-        {
-            get
-            {
-                return this.altitudeField;
-            }
-            set
-            {
-                this.altitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal heading
-        {
-            get
-            {
-                return this.headingField;
-            }
-            set
-            {
-                this.headingField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal tilt
-        {
-            get
-            {
-                return this.tiltField;
-            }
-            set
-            {
-                this.tiltField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal range
-        {
-            get
-            {
-                return this.rangeField;
-            }
-            set
-            {
-                this.rangeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public string altitudeMode
-        {
-            get
-            {
-                return this.altitudeModeField;
-            }
-            set
-            {
-                this.altitudeModeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderPlacemarkLineString
-    {
-
-        private byte tessellateField;
-
-        private string coordinatesField;
-
-        /// <remarks/>
-        public byte tessellate
-        {
-            get
-            {
-                return this.tessellateField;
-            }
-            set
-            {
-                this.tessellateField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string coordinates
-        {
-            get
-            {
-                return this.coordinatesField;
-            }
-            set
-            {
-                this.coordinatesField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderFolderPlacemarkPoint
-    {
-
-        private byte drawOrderField;
-
-        private string coordinatesField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public byte drawOrder
-        {
-            get
-            {
-                return this.drawOrderField;
-            }
-            set
-            {
-                this.drawOrderField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string coordinates
-        {
-            get
-            {
-                return this.coordinatesField;
-            }
-            set
-            {
-                this.coordinatesField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderPlacemark
-    {
-
-        private string nameField;
-
-        private byte visibilityField;
-
-        private kmlDocumentFolderPlacemarkLookAt lookAtField;
-
-        private string styleUrlField;
-
-        private kmlDocumentFolderPlacemarkPoint pointField;
-
-        /// <remarks/>
-        public string name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte visibility
-        {
-            get
-            {
-                return this.visibilityField;
-            }
-            set
-            {
-                this.visibilityField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderPlacemarkLookAt LookAt
-        {
-            get
-            {
-                return this.lookAtField;
-            }
-            set
-            {
-                this.lookAtField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string styleUrl
-        {
-            get
-            {
-                return this.styleUrlField;
-            }
-            set
-            {
-                this.styleUrlField = value;
-            }
-        }
-
-        /// <remarks/>
-        public kmlDocumentFolderPlacemarkPoint Point
-        {
-            get
-            {
-                return this.pointField;
-            }
-            set
-            {
-                this.pointField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderPlacemarkLookAt
-    {
-
-        private decimal longitudeField;
-
-        private decimal latitudeField;
-
-        private byte altitudeField;
-
-        private decimal headingField;
-
-        private decimal tiltField;
-
-        private decimal rangeField;
-
-        private string altitudeModeField;
-
-        /// <remarks/>
-        public decimal longitude
-        {
-            get
-            {
-                return this.longitudeField;
-            }
-            set
-            {
-                this.longitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal latitude
-        {
-            get
-            {
-                return this.latitudeField;
-            }
-            set
-            {
-                this.latitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public byte altitude
-        {
-            get
-            {
-                return this.altitudeField;
-            }
-            set
-            {
-                this.altitudeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal heading
-        {
-            get
-            {
-                return this.headingField;
-            }
-            set
-            {
-                this.headingField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal tilt
-        {
-            get
-            {
-                return this.tiltField;
-            }
-            set
-            {
-                this.tiltField = value;
-            }
-        }
-
-        /// <remarks/>
-        public decimal range
-        {
-            get
-            {
-                return this.rangeField;
-            }
-            set
-            {
-                this.rangeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public string altitudeMode
-        {
-            get
-            {
-                return this.altitudeModeField;
-            }
-            set
-            {
-                this.altitudeModeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentFolderPlacemarkPoint
-    {
-
-        private byte drawOrderField;
-
-        private string coordinatesField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.google.com/kml/ext/2.2")]
-        public byte drawOrder
-        {
-            get
-            {
-                return this.drawOrderField;
-            }
-            set
-            {
-                this.drawOrderField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string coordinates
-        {
-            get
-            {
-                return this.coordinatesField;
-            }
-            set
-            {
-                this.coordinatesField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyle
-    {
-
-        private kmlDocumentStyleIconStyle iconStyleField;
-
-        private kmlDocumentStyleLabelStyle labelStyleField;
-
-        private kmlDocumentStyleLineStyle lineStyleField;
+        private kmlLineStyle lineStyleField;
 
         private string idField;
 
         /// <remarks/>
-        public kmlDocumentStyleIconStyle IconStyle
+        public kmlIconStyle IconStyle
         {
             get
             {
@@ -1398,7 +622,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentStyleLabelStyle LabelStyle
+        public kmlLabelStyle LabelStyle
         {
             get
             {
@@ -1411,7 +635,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentStyleLineStyle LineStyle
+        public kmlLineStyle LineStyle
         {
             get
             {
@@ -1440,16 +664,16 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleIconStyle
+    public partial class kmlIconStyle
     {
 
         private string colorField;
 
         private decimal scaleField;
 
-        private kmlDocumentStyleIconStyleIcon iconField;
+        private kmlIcon iconField;
 
-        private kmlDocumentStyleIconStyleHotSpot hotSpotField;
+        private kmlHotSpot hotSpotField;
 
         /// <remarks/>
         public string color
@@ -1478,7 +702,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentStyleIconStyleIcon Icon
+        public kmlIcon Icon
         {
             get
             {
@@ -1491,7 +715,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public kmlDocumentStyleIconStyleHotSpot hotSpot
+        public kmlHotSpot hotSpot
         {
             get
             {
@@ -1506,7 +730,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleIconStyleIcon
+    public partial class kmlIcon
     {
 
         private string hrefField;
@@ -1527,7 +751,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleIconStyleHotSpot
+    public partial class kmlHotSpot
     {
 
         private decimal xField;
@@ -1597,7 +821,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleLabelStyle
+    public partial class kmlLabelStyle
     {
 
         private string colorField;
@@ -1618,7 +842,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleLineStyle
+    public partial class kmlLineStyle
     {
 
         private string colorField;
@@ -1654,16 +878,16 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleMap
+    public partial class kmlMap
     {
 
-        private kmlDocumentStyleMapPair[] pairField;
+        private kmlPair[] pairField;
 
         private string idField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Pair")]
-        public kmlDocumentStyleMapPair[] Pair
+        public kmlPair[] Pair
         {
             get
             {
@@ -1692,7 +916,7 @@ namespace KmlBrowser
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.opengis.net/kml/2.2")]
-    public partial class kmlDocumentStyleMapPair
+    public partial class kmlPair
     {
 
         private string keyField;

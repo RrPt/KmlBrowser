@@ -22,8 +22,11 @@ namespace KmlBrowser
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // einlesen der Datei
-            myKml = KmlIO.read(@"D:\Users\Petzoldt\Eigene Programme\rp\KmlBrowser\Daten\Ideen.kml");
+            myKml = KmlIO.read(tBKmlDateiName.Text);
+            //KmlIO.write(@"..\..\..\Daten\Ideen_neu.kml",myKml);
+
             // Anzeigen der Datei
+            tbOut.Clear();
             Show(myKml);
         }
 
@@ -34,29 +37,65 @@ namespace KmlBrowser
 
             foreach (var item in Document.Items)
             {
-                if (item.GetType() == typeof(kmlDocumentFolder))
+                if (item.GetType() == typeof(kmlFolder))
                 {
-                    showFolder((kmlDocumentFolder)item,0);
+                    showFolder((kmlFolder)item,0);
                 }
             }
 
         }
 
-        private void showFolder(kmlDocumentFolder mainFolder, int ident)
+        private void showFolder(kmlFolder mainFolder, int ident)
         {
-            String fill = "                                   ".Substring(0, ident);
-            tbOut.AppendText("Folder: " + mainFolder.name + Environment.NewLine);
+            showFolderInfo(mainFolder, ident);
 
-            foreach (kmlDocumentFolderFolder item in mainFolder.Folder)
+            if (mainFolder.Placemark != null)
             {
-                showFolder(item, ident + 1);
+                foreach (var item in mainFolder.Placemark)
+                {
+                    showPlacemarkInfo(item,ident);
+                }
             }
+
+
+            if (mainFolder.Folder != null)
+            {
+                foreach (kmlFolder item in mainFolder.Folder)
+                {
+                    showFolder(item, ident + 2);
+                } 
+            }
+        }
+
+        private void showPlacemarkInfo(kmlPlacemark item, int ident)
+        {
+            tbOut.AppendText(Einzug(ident+2)+"Placemark: " + item.name + Environment.NewLine);
+        }
+
+        private string Einzug(int ident)
+        {
+            return "".PadLeft(ident * 2, ' ');
+        }
+
+        private void showFolderInfo(kmlFolder mainFolder, int ident)
+        {
+            tbOut.AppendText(Einzug(ident) + "Folder: " + mainFolder.name + Environment.NewLine);
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
             btnLoad_Click(null, null);
+        }
+
+        private void btnFileAuswahl_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.InitialDirectory = Environment.CurrentDirectory ;
+            openFileDialog1.FileName = "Ideen.kml";
+            if (openFileDialog1.ShowDialog()== DialogResult.OK)
+            {
+                tBKmlDateiName.Text = openFileDialog1.FileName;
+            }
         }
     }
 }
