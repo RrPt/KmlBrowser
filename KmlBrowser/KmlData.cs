@@ -4,24 +4,58 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace KmlBrowser
 {
 
     class KmlIO
     {
+        static XmlDeserializationEvents deserialisationEvents = new XmlDeserializationEvents();
+        //public delegate void XmlAttributeEventHandler(object sender, XmlAttributeEventArgs e);
+
         public static kml read(String sourceFileName)
         {
             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(kml));
 
+            deserialisationEvents.OnUnknownAttribute = unknownAttribute;
+            deserialisationEvents.OnUnknownElement = unknownElement;
+            deserialisationEvents.OnUnknownNode = unknownNode;
+            deserialisationEvents.OnUnreferencedObject = unreferencedObject;
+
             kml myKml = new kml();
             FileStream fs = new FileStream(sourceFileName, FileMode.Open);
-            myKml = (kml)reader.Deserialize(fs);
+            XmlReader xmlReader = XmlReader.Create(fs);
+            myKml = (kml)reader.Deserialize(xmlReader, deserialisationEvents);
             fs.Close();
             
             return myKml;
         }
 
+        public static void unknownAttribute(object sender,	XmlAttributeEventArgs e)
+        {
+            String msg = String.Format("unknown Attribute: {2}  in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Attr.Name);
+            Console.WriteLine(msg);
+        }
+
+        public static void unknownElement(object sender, XmlElementEventArgs e)
+        {
+            String msg = String.Format("unknown Element: {2}  in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Element.Name);
+            Console.WriteLine(msg);
+        }
+
+        public static void unknownNode(object sender, XmlNodeEventArgs e)
+        {
+            String msg = String.Format("unknown Node: {2} vom Typ {3} in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Name, e.NodeType);
+            Console.WriteLine(msg);
+        }
+
+        public static void unreferencedObject(object sender, UnreferencedObjectEventArgs e)
+        {
+            String msg = String.Format("unreferencedObject: {0}  mit ID {1}", e.UnreferencedObject.ToString(),e.UnreferencedId);
+            Console.WriteLine(msg);
+        }
 
         public static void write(String FileName, kml kmlData)
         {
