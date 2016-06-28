@@ -451,22 +451,22 @@ namespace KmlBrowser
     public partial class kmlLookAt
     {
 
-        private decimal longitudeField;
+        private double longitudeField;
 
-        private decimal latitudeField;
+        private double latitudeField;
 
-        private byte altitudeField;
+        private double altitudeField;
 
-        private decimal headingField;
+        private double headingField;
 
-        private decimal tiltField;
+        private double tiltField;
 
-        private decimal rangeField;
+        private double rangeField;
 
         private string altitudeModeField;
 
         /// <remarks/>
-        public decimal longitude
+        public double longitude
         {
             get
             {
@@ -479,7 +479,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal latitude
+        public double latitude
         {
             get
             {
@@ -492,7 +492,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public byte altitude
+        public double altitude
         {
             get
             {
@@ -505,7 +505,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal heading
+        public double heading
         {
             get
             {
@@ -518,7 +518,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal tilt
+        public double tilt
         {
             get
             {
@@ -531,7 +531,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal range
+        public double range
         {
             get
             {
@@ -847,7 +847,7 @@ namespace KmlBrowser
 
         private string colorField;
 
-        private byte widthField;
+        private double widthField;
 
         /// <remarks/>
         public string color
@@ -863,7 +863,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public byte width
+        public double width
         {
             get
             {
