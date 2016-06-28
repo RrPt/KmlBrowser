@@ -176,22 +176,22 @@ namespace KmlBrowser
     public partial class kmlCamera
     {
 
-        private decimal longitudeField;
+        private double longitudeField;
 
-        private decimal latitudeField;
+        private double latitudeField;
 
-        private decimal altitudeField;
+        private double altitudeField;
 
-        private decimal headingField;
+        private double headingField;
 
-        private decimal tiltField;
+        private double tiltField;
 
-        private decimal rollField;
+        private double rollField;
 
         private string altitudeModeField;
 
         /// <remarks/>
-        public decimal longitude
+        public double longitude
         {
             get
             {
@@ -204,7 +204,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal latitude
+        public double latitude
         {
             get
             {
@@ -217,7 +217,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal altitude
+        public double altitude
         {
             get
             {
@@ -230,7 +230,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal heading
+        public double heading
         {
             get
             {
@@ -243,7 +243,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal tilt
+        public double tilt
         {
             get
             {
@@ -256,7 +256,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal roll
+        public double roll
         {
             get
             {
@@ -669,7 +669,7 @@ namespace KmlBrowser
 
         private string colorField;
 
-        private decimal scaleField;
+        private double scaleField;
 
         private kmlIcon iconField;
 
@@ -689,7 +689,7 @@ namespace KmlBrowser
         }
 
         /// <remarks/>
-        public decimal scale
+        public double scale
         {
             get
             {
@@ -754,9 +754,9 @@ namespace KmlBrowser
     public partial class kmlHotSpot
     {
 
-        private decimal xField;
+        private double xField;
 
-        private byte yField;
+        private double yField;
 
         private string xunitsField;
 
@@ -764,7 +764,7 @@ namespace KmlBrowser
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public decimal x
+        public double x
         {
             get
             {
@@ -778,7 +778,7 @@ namespace KmlBrowser
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte y
+        public double y
         {
             get
             {
