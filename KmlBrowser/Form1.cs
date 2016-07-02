@@ -22,11 +22,12 @@ namespace KmlBrowser
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // einlesen der Datei
-            myKml = KmlIO.read(tBKmlDateiName.Text);
+            KmlIO kmlIO = new KmlIO(showTxt);
+            myKml = kmlIO.read(tBKmlDateiName.Text);
             //KmlIO.write(@"..\..\..\Daten\Ideen_neu.kml",myKml);
 
             // Anzeigen der Datei
-            tbOut.Clear();
+            //tbOut.Clear();
             Show(myKml);
         }
 
@@ -97,5 +98,11 @@ namespace KmlBrowser
                 tBKmlDateiName.Text = openFileDialog1.FileName;
             }
         }
+
+        private void showTxt(String txt)
+        {
+            tbOut.AppendText(txt + Environment.NewLine);
+        }
+
     }
 }

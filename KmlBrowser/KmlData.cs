@@ -12,10 +12,21 @@ namespace KmlBrowser
 
     class KmlIO
     {
-        static XmlDeserializationEvents deserialisationEvents = new XmlDeserializationEvents();
-        //public delegate void XmlAttributeEventHandler(object sender, XmlAttributeEventArgs e);
+        XmlDeserializationEvents deserialisationEvents = new XmlDeserializationEvents();
+        public delegate void MsgFunction(String txt);
+        MsgFunction msgToExtern = null;
 
-        public static kml read(String sourceFileName)
+        public KmlIO(MsgFunction msg)
+        {
+            this.msgToExtern = msg;
+        }
+
+        private void show(String txt)
+        {
+            if (msgToExtern != null) msgToExtern(txt);
+        }
+
+        public  kml read(String sourceFileName)
         {
             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(kml));
 
@@ -33,31 +44,35 @@ namespace KmlBrowser
             return myKml;
         }
 
-        public static void unknownAttribute(object sender,	XmlAttributeEventArgs e)
+        public  void unknownAttribute(object sender,	XmlAttributeEventArgs e)
         {
             String msg = String.Format("unknown Attribute: {2}  in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Attr.Name);
+            show(msg);
             Console.WriteLine(msg);
         }
 
-        public static void unknownElement(object sender, XmlElementEventArgs e)
+        public  void unknownElement(object sender, XmlElementEventArgs e)
         {
             String msg = String.Format("unknown Element: {2}  in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Element.Name);
+            show(msg);
             Console.WriteLine(msg);
         }
 
-        public static void unknownNode(object sender, XmlNodeEventArgs e)
+        public  void unknownNode(object sender, XmlNodeEventArgs e)
         {
             String msg = String.Format("unknown Node: {2} vom Typ {3} in Zeile {0} Pos {1}", e.LineNumber, e.LinePosition, e.Name, e.NodeType);
+            show(msg);
             Console.WriteLine(msg);
         }
 
-        public static void unreferencedObject(object sender, UnreferencedObjectEventArgs e)
+        public  void unreferencedObject(object sender, UnreferencedObjectEventArgs e)
         {
             String msg = String.Format("unreferencedObject: {0}  mit ID {1}", e.UnreferencedObject.ToString(),e.UnreferencedId);
+            show(msg);
             Console.WriteLine(msg);
         }
 
-        public static void write(String FileName, kml kmlData)
+        public  void write(String FileName, kml kmlData)
         {
             System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(kml));
             FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate);
@@ -89,11 +104,6 @@ namespace KmlBrowser
                 this.documentField = value;
             }
         }
-
-
-
-
-
     }
 
     /// <remarks/>
